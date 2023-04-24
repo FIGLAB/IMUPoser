@@ -1,3 +1,3 @@
-from .DIP_OG import *
-from .DIP_OGFineTune import *
+from .IMUPoser_Model import  *
+from .IMUPoser_Model_FineTune import *
 from .RNN import *
