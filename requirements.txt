@@ -1,0 +1,9 @@
+pytorch_lightning==1.6.5
+tqdm==4.64.0
+matplotlib==3.2.2
+numpy==1.21.2
+opencv-python
+scipy==1.7.3
+wandb==0.12.11
+chumpy
+dotmap
