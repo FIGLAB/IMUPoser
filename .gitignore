@@ -1,5 +1,6 @@
-data/processed_imu_poser
-data/processed_imu_poser_25fps
+data/processed_imuposer
+data/processed_imuposer_25fps
+data/raw
 # experiments
 checkpoints
 results
