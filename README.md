@@ -1,7 +1,7 @@
 # IMUPoser: Full-Body Pose Estimation using IMUs in Phones, Watches, and Earbuds
+Click to watch the video!
 <p align="center">
-  <img src="media/IMUPoser_github.png" alt="animated" width="100%"/>
-  <img width="100%" src="https://www.youtube.com/watch?v=hgpjbKv8XFY"/>
+  <a href="https://www.youtube.com/watch?v=hgpjbKv8XFY"><img src="media/IMUPoser_github.png" alt="animated" width="100%"/></a>
 </p>
 
 Research code for IMUPoser (CHI 2023)
