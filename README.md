@@ -1,6 +1,7 @@
 # IMUPoser: Full-Body Pose Estimation using IMUs in Phones, Watches, and Earbuds
+Click to watch the video!
 <p align="center">
-  <img src="media/IMUPoser_github.png" alt="animated" width="100%"/>
+  <a href="https://www.youtube.com/watch?v=hgpjbKv8XFY"><img src="media/IMUPoser_github.png" alt="animated" width="100%"/></a>
 </p>
 
 Research code for IMUPoser (CHI 2023)
@@ -9,6 +10,7 @@ Research code for IMUPoser (CHI 2023)
 Vimal Mollyn, Riku Arakawa, Mayank Goel, Chris Harrison, and Karan Ahuja. 2023. IMUPoser: Full-Body Pose Estimation using IMUs in Phones, Watches, and Earbuds. In Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems (CHI '23). Association for Computing Machinery, New York, NY, USA, Article 529, 1–12.
 
 [Download Paper Here](https://drive.google.com/uc?export=download&id=1FYB52VN_v3ZIh99BNVLffXzqHRyD23rG)
+
 
 BibTeX Reference:
 
