@@ -3,7 +3,11 @@ import torch
 import datetime
 
 class Config:
-    def __init__(self, experiment=None, model=None, project_root_dir=None, joints_set=None, loss_type=None, mkdir=True, normalize=False, r6d=False, device=None, use_joint_loss=False, use_glb_rot_loss=False, use_acc_recon_loss=False, pred_joints_set=None, pred_last_frame=False, use_vposer_loss=False, use_vel_loss=False):
+    def __init__(self, experiment=None, model=None, project_root_dir=None,
+                 joints_set=None, loss_type=None, mkdir=True, normalize=False,
+                 r6d=False, device=None, use_joint_loss=False, use_glb_rot_loss=False,
+                 use_acc_recon_loss=False, pred_joints_set=None, pred_last_frame=False,
+                 use_vposer_loss=False, use_vel_loss=False):
         self.experiment = experiment
         self.model = model
         self.root_dir = Path(project_root_dir).absolute()
@@ -39,11 +43,8 @@ class Config:
         self.raw_dip_path = self.root_dir / "data/raw/DIP_IMU"
         self.raw_amass_path = self.root_dir / "data/raw/AMASS"
 
-        self.processed_dip_path = self.root_dir / "data/processed/DIP_IMU"
-        self.processed_like_transpose_path = self.root_dir / "data/processed"
         self.processed_imu_poser = self.root_dir / "data/processed_imuposer"
         self.processed_imu_poser_25fps = self.root_dir / "data/processed_imuposer_25fps"
-        self.processed_uwb_poser_5fps = self.root_dir / "data/processed_uwb_poser_5fps"
 
         self.vposer_ckpt_path = self.root_dir / "extern/vposer_v2_05"
 
@@ -88,35 +89,6 @@ class Config:
 # 10 (right hip)
 # 9 (left hip)
 
-dip_combos = {
-    "full": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-    # Smartwatch (right/left wrist) + airpods (head) + phone in pocket (left/right)
-    "rw_h_lp": [14, 15, 9],
-    "lw_h_lp": [13, 15, 9],
-    "rw_h_rp": [14, 15, 10],
-    "lw_h_rp": [13, 15, 10],
-    # Smartwatch + airpods + phone in other hand
-    "lw_h_rw": [13, 15, 14],
-    # Smartwatch + airpods 
-    "lw_h": [13, 15],
-    "rw_h": [14, 15],
-    # Airpods + phone in pocket
-    "lp_h": [9, 15],
-    "rp_h": [10, 15],
-    # Airpods only 
-    "h": [15],
-    # Phone in pocket only 
-    "lp": [9],
-    "rp": [10],
-    # Phone in hand only, Smartwatch Only
-    "lw": [13],
-    "rw": [14],
-    "dip_me": [14, 13, 15, 9, 10, 0],
-    "dip": [7, 8, 11, 12, 0, 2],
-    # left and right wrist
-    "lw_rw": [13, 14]
-}
-
 imuName2idx = {
     "lw": 0,
     "rw": 1,
@@ -124,29 +96,6 @@ imuName2idx = {
     "rp": 3,
     "h": 4
 }
-
-# same as the order from transpose
-# amass_combos = {
-#     # left and right wrist
-#     "lw_rw": [0, 1],
-#     # left and right pocket
-#     "lw_rp": [0, 3], 
-#     # left wrist, right pocket, headphones
-#     "lw_rp_h": [0, 3, 4],
-#     # left and right wrist and headphones
-#     "lw_rw_h": [0, 1, 4],
-#     "lp_rp_h": [2, 3, 4],
-#     "lp_rp": [2, 3],
-#     "all": [0, 1, 2, 3, 4, 5],
-#     "global": [0, 1, 2, 3, 4],
-#     "lp": [2],
-#     "rp": [3],
-#     "h": [4],
-#     "rw": [1],
-#     "lp_rw_h": [2, 1, 4],
-#     "lp_h": [2, 4],
-#     "rw_h": [1, 4],
-# }
 
 amass_combos = {
     'global': [0, 1, 2, 3, 4],
@@ -183,30 +132,14 @@ pred_joints_set = {
     "head": [0, 12, 15],
 }
 
+# Add more here if you want
 amass_datasets = ['ACCAD', 'BioMotionLab_NTroje', 'BMLhandball', 'BMLmovi', 'CMU',
                   'DanceDB', 'DFaust_67', 'EKUT', 'Eyes_Japan_Dataset', 'HUMAN4D',
                   'HumanEva', 'KIT', 'MPI_HDM05', 'MPI_Limits', 'MPI_mosh', 'SFU',
                   'SSM_synced', 'TCD_handMocap', 'TotalCapture', 'Transitions_mocap']
 
-# leaf_joints = [7, 8, 12, 20, 21]
 leaf_joints = [20, 21, 7, 8, 12]
 
-# limb2vertexkeys = {
-#     "Legs": ["rightUpLeg", "leftLeg", "leftToeBase", "leftFoot", "rightFoot", "rightLeg", "rightToeBase", "leftUpLeg"],
-#     "LArm": ["leftArm", "leftHandIndex1", "leftForeArm", "leftHand", "leftShoulder"], 
-#     "RArm": ["rightArm", "rightHandIndex1", "rightForeArm", "rightHand", "rightShoulder"], 
-#     "Head": ["head", "neck"], 
-#     "Torso": ["spine1", "spine2", "spine", "hips"]
-# }
-# 
-# 
-# limb2joints = {
-#     "Legs": [1, 2, 4, 5, 7, 8, 10, 11],
-#     "LArm": [16, 18, 20, 22],
-#     "RArm": [17, 19, 21, 23],
-#     "Head": [15, 12],
-#     "Torso": [3, 6, 9, 13, 14]
-# }
 
 limb2vertexkeys = {
     "LLeg": ["leftLeg", "leftToeBase", "leftFoot", "leftUpLeg"],
