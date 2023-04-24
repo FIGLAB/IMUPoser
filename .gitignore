@@ -1,0 +1,14 @@
+data/processed_imuposer
+data/processed_imuposer_25fps
+data/raw
+# experiments
+checkpoints
+results
+
+ProcessMocap
+
+**/__pycache__/
+**/lightning_logs/
+**/wandb/
+**/*.egg-info/
+**/.ipynb_checkpoints/
