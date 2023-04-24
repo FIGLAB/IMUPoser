@@ -1,4 +1,4 @@
-data/processed
+data/processed_imu_poser
 data/processed_imu_poser_25fps
 # experiments
 checkpoints
