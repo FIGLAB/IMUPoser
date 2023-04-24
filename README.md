@@ -1,4 +1,8 @@
 # IMUPoser: Full-Body Pose Estimation using IMUs in Phones, Watches, and Earbuds
+<p align="center">
+  <img src="media/IMUPoser_github.png" alt="animated" width="100%"/>
+</p>
+
 Research code for IMUPoser (CHI 2023)
 
 ## Reference
@@ -44,7 +48,7 @@ python -m pip install -r requirements.txt
 python -m pip install -e src/
 ```
 
-## Steps to Run
+## 3. Training Steps
 1. Start by preprocessing the AMASS and DIP-IMU datasets [scripts/1. Preprocessing](scripts/1.%20Preprocessing). Run all files in order.
 2. Train the model [scripts/2. Train/run\_combos.sh](scripts/2.%20Train/run_combos.sh)
 
