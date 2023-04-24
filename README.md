@@ -38,8 +38,7 @@ We recommend using conda. Tested on `Ubuntu 18.04`, with `python 3.7`.
 ```bash
 conda create -n "imuposer" python=3.7
 conda activate imuposer
-conda install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=10.2 -c pytorch
-
+conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=10.2 -c pytorch
 
 python -m pip install -r requirements.txt
 python -m pip install -e src/
