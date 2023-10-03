@@ -50,13 +50,50 @@ python -m pip install -r requirements.txt
 python -m pip install -e src/
 ```
 
-## 3. Training Steps
+## 3. Download training data
+1. Download training data from [AMASS](https://amass.is.tue.mpg.de/index.html) and [DIP-IMU](https://dip.is.tuebingen.mpg.de/) and place in the data folder.
+
+```bash
+data
+└── raw
+    ├── AMASS
+    │   ├── ACCAD
+    │   ├── BioMotionLab_NTroje
+    │   ├── BMLhandball
+    │   ├── BMLmovi
+    │   ├── CMU
+    │   ├── DanceDB
+    │   ├── DFaust_67
+    │   ├── EKUT
+    │   ├── Eyes_Japan_Dataset
+    │   ├── HUMAN4D
+    │   ├── HumanEva
+    │   ├── KIT
+    │   ├── MPI_HDM05
+    │   ├── MPI_Limits
+    │   ├── MPI_mosh
+    │   ├── SFU
+    │   ├── SSM_synced
+    │   ├── TCD_handMocap
+    │   ├── TotalCapture
+    │   └── Transitions_mocap
+    ├── DIP_IMU
+    │   ├── s_01
+    │   ├── s_02
+    │   ├── s_03
+    │   ├── s_04
+    │   ├── s_05
+    │   ├── s_06
+    │   ├── s_07
+    │   ├── s_08
+    │   ├── s_09
+    │   └── s_10
+    └── README.md
+```
+
+## 4. Training Steps
 1. Start by preprocessing the AMASS and DIP-IMU datasets [scripts/1. Preprocessing](scripts/1.%20Preprocessing). Run all files in order.
 2. Train the model [scripts/2. Train/run\_combos.sh](scripts/2.%20Train/run_combos.sh)
-
-## Coming Soon!
-1. IMUPoser Dataset
-2. Real-Time Demo
 
 ## Disclaimer
 ```
