@@ -26,6 +26,7 @@ class IMUPoserModel(pl.LightningModule):
         n_output = self.n_pose_output
 
         self.batch_size = config.batch_size
+        
         self.dip_model = RNN(n_input=n_input, n_output=n_output, n_hidden=512, bidirectional=True)
 
         self.config = config
