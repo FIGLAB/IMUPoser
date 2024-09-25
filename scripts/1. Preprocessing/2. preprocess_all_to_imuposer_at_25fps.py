@@ -2,6 +2,8 @@ r"""
     Resample 60fps datasets to 25fps
     Smoothen with an average filter
 """
+import sys
+sys.path.append('../../src')
 
 # +
 import torch
@@ -77,7 +79,9 @@ for fpath in (config.processed_imu_poser / "AMASS").iterdir():
         "ori": vrot
     }
     
-    torch.save(fdata, path_to_save / f"{fpath.name}.pt")
+    file_path_to_save = path_to_save / f"{fpath.name}.pt"
+    torch.save(fdata, file_path_to_save)
+    print(f'{file_path_to_save} saved!')
 
 # process DIP next
 for fpath in (config.processed_imu_poser / "DIP_IMU").iterdir():
@@ -101,5 +105,7 @@ for fpath in (config.processed_imu_poser / "DIP_IMU").iterdir():
         "ori": rot
     }
     
-    torch.save(fdata, path_to_save / f"dip_{fpath.name}.pt")
+    file_path_to_save = path_to_save / f"dip_{fpath.name}.pt"
+    torch.save(fdata, file_path_to_save)
+    print(f'{file_path_to_save} saved!')
 

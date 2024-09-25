@@ -7,6 +7,9 @@ r"""
 # %load_ext autoreload
 # %autoreload 2
 
+import sys
+sys.path.append('../../src')
+
 import torch
 import os
 import pickle
