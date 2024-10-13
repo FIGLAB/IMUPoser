@@ -2,6 +2,9 @@
 # %load_ext autoreload
 # %autoreload 2
 
+import sys
+sys.path.append('../../src')
+
 # %%
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
