@@ -36,6 +36,7 @@ series = {CHI '23}
 ## 1. Clone (or Fork!) this repository
 ```
 git clone https://github.com/FIGLAB/IMUPoser.git
+git clone https://github.com/bryanbocao/IMUPoser.git
 ```
  
 ## 2. Create a virtual environment
@@ -51,49 +52,138 @@ python -m pip install -e src/
 ```
 
 ## 3. Download training data
-1. Download training data from [AMASS](https://amass.is.tue.mpg.de/index.html) and [DIP-IMU](https://dip.is.tuebingen.mpg.de/) and place in the data folder.
+1. Download training data from [AMASS](https://amass.is.tue.mpg.de/index.html) and [DIP-IMU](https://dip.is.tuebingen.mpg.de/). We use ```<ROOT>``` to refer to the root path of this repository in your file system.
+Prepare folders in the following format:
+```
+<ROOT>
+  └── data
+    └── raw
+        ├── AMASS
+          ├── tar
+        ├── DIP_IMU
+          ├── zip
+```
+Below is an example of scripts to generate these folders in Command Line Interface (CLI):
+```
+IMUPoser$
+mkdir data
+cd data/
+mkdir raw
+cd raw
+mkdir datasets
+cd datasets
+mkdir AMASS
+cd AMASS
+mkdir tar
+cd tar
+```
 
-```bash
-data
-└── raw
-    ├── AMASS
-    │   ├── ACCAD
-    │   ├── BioMotionLab_NTroje
-    │   ├── BMLhandball
-    │   ├── BMLmovi
-    │   ├── CMU
-    │   ├── DanceDB
-    │   ├── DFaust_67
-    │   ├── EKUT
-    │   ├── Eyes_Japan_Dataset
-    │   ├── HUMAN4D
-    │   ├── HumanEva
-    │   ├── KIT
-    │   ├── MPI_HDM05
-    │   ├── MPI_Limits
-    │   ├── MPI_mosh
-    │   ├── SFU
-    │   ├── SSM_synced
-    │   ├── TCD_handMocap
-    │   ├── TotalCapture
-    │   └── Transitions_mocap
-    ├── DIP_IMU
-    │   ├── s_01
-    │   ├── s_02
-    │   ├── s_03
-    │   ├── s_04
-    │   ├── s_05
-    │   ├── s_06
-    │   ├── s_07
-    │   ├── s_08
-    │   ├── s_09
-    │   └── s_10
-    └── README.md
+Register an account both websites below.
+
+**AMASS** (SMPL-H) https://amass.is.tue.mpg.de/download.php. Download all datasets with the ```SMPL+H G``` (or ```SMPL-X G``` for CNRS) format into this folder
+```<ROOT>/data/raw/datasets/AMASS/tar```. Note BMLrub, GRAB, SOMA, WEIZMANN are not used.
+
+**DIP_IMU** (DIP IMU AND OTHERS - DOWNLOAD SERVER 1) https://dip.is.tuebingen.mpg.de/index.html.
+
+Follow the format below:
+```
+<ROOT>
+  └── data
+    └── raw
+        ├── AMASS
+          ├── tar
+            ├── ACCAD.tar.bz2              (ACCAD - SMPL+H G)
+            ├── (None)                     (BMLhandball - SMPL+H G)
+            ├── BMLmovi.tar.bz2            (BMLmovi - SMPL+H G)
+            ├── CMU.tar.bz2                (CMU - SMPL+H G)
+            ├── CNRS.tar.bz2               (CNRS - SMPL-X G)
+            ├── DFaust.tar.bz2             (DFaust - SMPL+H G)
+            ├── DanceDB.tar.bz2            (DanceDB - SMPL+H G)
+            ├── EKUT.tar.bz2               (EKUT - SMPL+H G)
+            ├── EyesJapanDataset.tar.bz2   (EyesJapanDataset - SMPL+H G)
+            ├── HDM05.tar.bz2              (HDM05 - SMPL+H G)
+            ├── HUMAN4D.tar.bz2            (HUMAN4D - SMPL+H G)
+            ├── HumanEva.tar.bz2           (HumanEva - SMPL+H G)
+            ├── KIT.tar.bz2                (KIT - SMPL+H G)
+            ├── MoSh.tar.bz2               (MoSh - SMPL+H G)
+            ├── PosePrior.tar.bz2          (PosePrior - SMPL+H G)
+            ├── SFU.tar.bz2                (SFU - SMPL+H G)
+            ├── SSM.tar.bz2                (SSM - SMPL+H G)
+            ├── TCDHands.tar.bz2           (TCDHands - SMPL+H G)
+            ├── TotalCapture.tar.bz2       (TotalCapture - SMPL+H G)
+            ├── Transitions.tar.bz2        (Transitions - SMPL+H G)
+        ├── DIP_IMU
+          ├── zip
+            ├── DIPIMUandOthers.zip
+```
+
+Follow this structure:
+```
+<ROOT>
+  └── data
+    └── raw
+      ├── AMASS
+      │   ├── ACCAD
+      │   ├── BioMotionLab_NTroje(Unavailable from website)
+      │   ├── BMLhandball
+      │   ├── BMLmovi
+      │   ├── CMU
+      │   ├── DanceDB
+      │   ├── DFaust_67
+      │   ├── EKUT
+      │   ├── Eyes_Japan_Dataset
+      │   ├── HUMAN4D
+      │   ├── HumanEva
+      │   ├── KIT
+      │   ├── MPI_HDM05
+      │   ├── MPI_Limits
+      │   ├── MPI_mosh
+      │   ├── SFU
+      │   ├── SSM_synced
+      │   ├── TCD_handMocap
+      │   ├── TotalCapture
+      │   └── Transitions_mocap
+      ├── DIP_IMU
+      │   ├── s_01
+      │   ├── s_02
+      │   ├── s_03
+      │   ├── s_04
+      │   ├── s_05
+      │   ├── s_06
+      │   ├── s_07
+      │   ├── s_08
+      │   ├── s_09
+      │   └── s_10
+      └── README.md
+```
+Note ```BioMotionLab_NTroje``` is missing from the AMASS Dataset when I download the data: https://github.com/FIGLAB/IMUPoser/issues/12
+
+Unzip all data:
+```
+cd <ROOT>/data/raw/datasets/AMASS/tar
+for f in *.tar.bz2; do tar xf "$f"; done
+(wait for a few minutes)
+rm -r *.tar.bz2 (if you want to clean the zipped files)
+
+cd <ROOT>/data/raw/datasets/DIP_IMU/zip
+unzip DIPIMUandOthers.zip
+cd DIP_IMU_and_Others
+unzip DIP_IMU.zip
+
+cd <ROOT>/data/raw
+mv <ROOT>/data/raw/datasets/AMASS/tar/* <ROOT>/data/raw/AMASS
+mv <ROOT>/data/raw/datasets/DIP_IMU/zip/DIP_IMU_and_Others/DIP_IMU <ROOT>/data/raw
+```
+
+Clean zipped data:
+```
+rm -r <ROOT>/data/raw/datasets/AMASS/tar
+rm -r <ROOT>/data/raw/datasets/DIP_IMU/zip
 ```
 
 ## 4. Training Steps
-1. Start by preprocessing the AMASS and DIP-IMU datasets [scripts/1. Preprocessing](scripts/1.%20Preprocessing). Run all files in order.
-2. Train the model [scripts/2. Train/run\_combos.sh](scripts/2.%20Train/run_combos.sh)
+1. Preprocess the AMASS and DIP-IMU datasets [scripts/1_preprocessing](scripts/1_preprocessing). Run all files in order.
+2. Train the model [scripts/2_train/run_combos.sh](scripts/2_train/run_combos.sh) ([scripts/2_train/run_combos_long.sh](scripts/2_train/run_combos_long.sh) for long training).
 
 ## Disclaimer
 ```
