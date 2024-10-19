@@ -17,8 +17,16 @@ import glob
 from imuposer.config import Config, amass_datasets
 from imuposer.smpl.parametricModel import ParametricModel
 from imuposer import math
+from pathlib import Path
 
-config = Config(project_root_dir="../../")
+# Get the absolute path to the project root
+project_root = Path(__file__).resolve().parents[2]
+
+# Create the Config object with the correct project root
+config = Config(project_root_dir=str(project_root))
+
+# config = Config(project_root_dir="../../")
+print(f"SMPL model path: {config.og_smpl_model_path}")
 
 def process_amass():
     def _syn_acc(v):

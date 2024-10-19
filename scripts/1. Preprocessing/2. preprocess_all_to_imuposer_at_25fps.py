@@ -5,13 +5,18 @@ r"""
 
 # +
 import torch
-
+from pathlib import Path
 from imuposer.config import Config
 from imuposer import math
 # -
 
-config = Config(project_root_dir="../../")
+experiment_name = "preprocess_25fps"
 
+# Use the experiment name when creating the Config object
+config = Config(experiment=experiment_name, project_root_dir="../../")
+
+project_root = Path(__file__).resolve().parents[2]  # This goes up two levels from the script location
+config = Config(experiment=experiment_name, project_root_dir=str(project_root))
 # +
 target_fps = 25
 # hop = 60 // target_fps
@@ -57,15 +62,25 @@ path_to_save.mkdir(exist_ok=True, parents=True)
 
 # process AMASS first
 for fpath in (config.processed_imu_poser / "AMASS").iterdir():
+    # Skip .DS_Store files
+    if fpath.name == '.DS_Store':
+        continue
+
+    # Check if the path is a directory
+    if not fpath.is_dir():
+        print(f"Skipping non-directory item: {fpath}")
+        continue
+
+
     # resample to 25 fps
-    joint = [_resample(x, target_fps) for x in torch.load(fpath / "joint.pt")]
-    pose = [math.axis_angle_to_rotation_matrix(_resample(x, target_fps).contiguous()).view(-1, 24, 3, 3) for x in torch.load(fpath / "pose.pt")]
-    shape = torch.load(fpath / "shape.pt")
-    tran = [_resample(x, target_fps) for x in torch.load(fpath / "tran.pt")]
+    joint = [_resample(x, target_fps) for x in torch.load(fpath / "joint.pt", weights_only=True)]
+    pose = [math.axis_angle_to_rotation_matrix(_resample(x, target_fps).contiguous()).view(-1, 24, 3, 3) for x in torch.load(fpath / "pose.pt", weights_only=True)]
+    shape = torch.load(fpath / "shape.pt", weights_only=True)
+    tran = [_resample(x, target_fps) for x in torch.load(fpath / "tran.pt", weights_only=True)]
     
     # average filter
-    vacc = [smooth_avg(_resample(x, target_fps), s=5) for x in torch.load(fpath / "vacc.pt")]
-    vrot = [_resample(x, target_fps) for x in torch.load(fpath / "vrot.pt")]
+    vacc = [smooth_avg(_resample(x, target_fps), s=5) for x in torch.load(fpath / "vacc.pt", weights_only=True)]
+    vrot = [_resample(x, target_fps) for x in torch.load(fpath / "vrot.pt", weights_only=True)]
     
     # save the data
     fdata = {
@@ -81,15 +96,24 @@ for fpath in (config.processed_imu_poser / "AMASS").iterdir():
 
 # process DIP next
 for fpath in (config.processed_imu_poser / "DIP_IMU").iterdir():
+    # Skip .DS_Store files
+    if fpath.name == '.DS_Store':
+        continue
+
+    # Check if the path is a directory
+    if not fpath.is_dir():
+        print(f"Skipping non-directory item: {fpath}")
+        continue
+    
     # resample to 25 fps
-    joint = [_resample(x, target_fps) for x in torch.load(fpath / "joint.pt")]
-    pose = [math.axis_angle_to_rotation_matrix(_resample(x, target_fps).contiguous()).view(-1, 24, 3, 3) for x in torch.load(fpath / "pose.pt")]
-    shape = torch.load(fpath / "shape.pt")
-    tran = [_resample(x, target_fps) for x in torch.load(fpath / "tran.pt")]
+    joint = [_resample(x, target_fps) for x in torch.load(fpath / "joint.pt", weights_only=True)]
+    pose = [math.axis_angle_to_rotation_matrix(_resample(x, target_fps).contiguous()).view(-1, 24, 3, 3) for x in torch.load(fpath / "pose.pt", weights_only=True)]
+    shape = torch.load(fpath / "shape.pt", weights_only=True)
+    tran = [_resample(x, target_fps) for x in torch.load(fpath / "tran.pt", weights_only=True)]
     
     # average filter
-    acc = [smooth_avg(_resample(x, target_fps), s=5) for x in torch.load(fpath / "accs.pt")]
-    rot = [_resample(x, target_fps) for x in torch.load(fpath / "oris.pt")]
+    acc = [smooth_avg(_resample(x, target_fps), s=5) for x in torch.load(fpath / "accs.pt", weights_only=True)]
+    rot = [_resample(x, target_fps) for x in torch.load(fpath / "oris.pt",  weights_only=True)]
     
     # save the data
     fdata = {
