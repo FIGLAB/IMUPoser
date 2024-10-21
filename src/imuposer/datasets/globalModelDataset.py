@@ -22,7 +22,7 @@ class GlobalModelDataset(Dataset):
         pose = []
 
         for fname in data_files:
-            fdata = torch.load(self.config.processed_imu_poser_25fps / fname)
+            fdata = torch.load(self.config.processed_imu_poser_25fps / fname, weights_only=True)
 
             for i in range(len(fdata["acc"])):
                 # inputs
