@@ -4,7 +4,6 @@ data/raw
 # experiments
 checkpoints
 results
-
 ProcessMocap
 
 **/__pycache__/
@@ -12,3 +11,8 @@ ProcessMocap
 **/wandb/
 **/*.egg-info/
 **/.ipynb_checkpoints/
+
+imuposer_env
+.vscode
+
+**/.DS_Store
