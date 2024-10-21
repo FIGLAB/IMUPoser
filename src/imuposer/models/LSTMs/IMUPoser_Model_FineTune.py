@@ -92,14 +92,17 @@ class IMUPoserModelFineTune(pl.LightningModule):
 
         return {"loss": loss.item(), "pred": pred_pose, "true": target_pose}
 
-    def training_epoch_end(self, outputs):
-        self.epoch_end_callback(outputs, loop_type="train")
+    def on_train_epoch_end(self):
+        self.epoch_end_callback(self.train_step_outputs, loop_type="train")
+        self.train_step_outputs.clear()
 
-    def validation_epoch_end(self, outputs):
-        self.epoch_end_callback(outputs, loop_type="val")
+    def on_validation_epoch_end(self):
+        self.epoch_end_callback(self.val_step_outputs, loop_type="val")
+        self.val_step_outputs.clear()
 
-    def test_epoch_end(self, outputs):
-        self.epoch_end_callback(outputs, loop_type="test")
+    def on_test_epoch_end(self):
+        self.epoch_end_callback(self.test_step_outputs, loop_type="test")
+        self.test_step_outputs.clear()
 
     def epoch_end_callback(self, outputs, loop_type="train"):
         loss = []
