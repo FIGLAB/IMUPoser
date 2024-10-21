@@ -11,13 +11,14 @@ import pickle
 import torch
 import numpy as np
 from imuposer import math as M
+from imuposer.get_device import get_device 
 
 
 class ParametricModel:
     r"""
     SMPL/MANO/SMPLH parametric model.
     """
-    def __init__(self, official_model_file: str, use_pose_blendshape=False, device=torch.device('cpu')):
+    def __init__(self, official_model_file: str, use_pose_blendshape=False,  device=None):
         r"""
         Init an SMPL/MANO/SMPLH parametric model.
 
@@ -25,14 +26,18 @@ class ParametricModel:
         :param use_pose_blendshape: Whether to use the pose blendshape.
         :param device: torch.device, cpu or cuda.
         """
+        if device is None:
+            device = get_device()
+        self.device = device
+
         with open(official_model_file, 'rb') as f:
             data = pickle.load(f, encoding='latin1')
-        self._J_regressor = torch.from_numpy(data['J_regressor'].toarray()).float().to(device)
-        self._skinning_weights = torch.from_numpy(data['weights']).float().to(device)
-        self._posedirs = torch.from_numpy(data['posedirs']).float().to(device)
-        self._shapedirs = torch.from_numpy(np.array(data['shapedirs'])).float().to(device)
-        self._v_template = torch.from_numpy(data['v_template']).float().to(device)
-        self._J = torch.from_numpy(data['J']).float().to(device)
+        self._J_regressor = torch.from_numpy(data['J_regressor'].toarray()).float().to(self.device)
+        self._skinning_weights = torch.from_numpy(data['weights']).float().to(self.device)
+        self._posedirs = torch.from_numpy(data['posedirs']).float().to(self.device)
+        self._shapedirs = torch.from_numpy(np.array(data['shapedirs'])).float().to(self.device)
+        self._v_template = torch.from_numpy(data['v_template']).float().to(self.device)
+        self._J = torch.from_numpy(data['J']).float().to(self.device)
         self.face = data['f']
         self.parent = data['kintree_table'][0].tolist()
         self.parent[0] = None
@@ -223,7 +228,7 @@ class ParametricModel:
         def add_tran(x):
             return x if tran is None else x + tran.view(-1, 1, 3)
 
-        pose = pose.view(pose.shape[0], -1, 3, 3)
+        pose = pose.to(self.device).view(pose.shape[0], -1, 3, 3)
         j, v = [_.expand(pose.shape[0], -1, -1) for _ in self.get_zero_pose_joint_and_vertex(shape)]
 
         T_local = M.transformation_matrix(pose, self.joint_position_to_bone_vector(j))
@@ -235,7 +240,7 @@ class ParametricModel:
         T_global[..., -1:] -= torch.matmul(T_global, M.append_zero(j, dim=-1).unsqueeze(-1))
         T_vertex = torch.tensordot(T_global, self._skinning_weights, dims=([1], [1])).permute(0, 3, 1, 2)
         if self.use_pose_blendshape:
-            r = (pose[:, 1:] - torch.eye(3, device=pose.device)).flatten(1)
+            r = (pose[:, 1:] - torch.eye(3, device=self.device)).flatten(1)
             v = v + torch.tensordot(r, self._posedirs, dims=([1], [2]))
         vertex_global = torch.matmul(T_vertex, M.append_one(v, dim=-1).unsqueeze(-1)).squeeze(-1)[..., :3]
         return pose_global, add_tran(joint_global), add_tran(vertex_global)

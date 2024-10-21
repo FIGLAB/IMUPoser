@@ -1,6 +1,7 @@
 from pathlib import Path
 import torch
 import datetime
+from imuposer.get_device import get_device
 
 class Config:
     def __init__(self, experiment=None, model=None, project_root_dir=None,
@@ -24,13 +25,18 @@ class Config:
         self.use_vposer_loss = use_vposer_loss
         self.use_vel_loss = use_vel_loss
 
-        if device != None:
-            if 'cpu' in device:
-                self.device = torch.device(f'cpu')
-            else:
-                self.device = torch.device(f'cuda:{device}')
+        if device is None:
+            self.device = get_device()
         else:
-            self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+            if isinstance(device, torch.device):
+                self.device = device
+            elif isinstance(device, str):
+                if device.lower() in ['mps', 'cpu', 'cuda']:
+                    self.device = torch.device(device.lower())
+                else:
+                    raise ValueError(f"Invalid device string: '{device}'. Use 'mps', 'cpu', or 'cuda'.")
+            else:
+                raise ValueError(f"Invalid device type. Expected str or torch.device, got {type(device)}")
 
         self.build_paths()
 
