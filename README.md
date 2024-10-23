@@ -85,7 +85,7 @@ Register an account both websites below.
 
 **DIP_IMU** (DIP IMU AND OTHERS - DOWNLOAD SERVER 1) https://dip.is.tuebingen.mpg.de/index.html.
 
-Follow the format below:
+The files should follow the structure below:
 ```
 <ROOT>
   └── data
