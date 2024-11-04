@@ -12,3 +12,4 @@ ProcessMocap
 **/wandb/
 **/*.egg-info/
 **/.ipynb_checkpoints/
+.DS_Store

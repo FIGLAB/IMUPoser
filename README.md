@@ -9,7 +9,7 @@ Research code for IMUPoser (CHI 2023)
 ## Reference
 Vimal Mollyn, Riku Arakawa, Mayank Goel, Chris Harrison, and Karan Ahuja. 2023. IMUPoser: Full-Body Pose Estimation using IMUs in Phones, Watches, and Earbuds. In Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems (CHI '23). Association for Computing Machinery, New York, NY, USA, Article 529, 1–12.
 
-[Download Paper Here](https://drive.google.com/uc?export=download&id=1FYB52VN_v3ZIh99BNVLffXzqHRyD23rG)
+[Paper](https://dl.acm.org/doi/10.1145/3544548.3581392) | [Website](https://www.figlab.com/research/2023/imuposer)
 
 
 BibTeX Reference:
@@ -51,7 +51,7 @@ python -m pip install -e src/
 ```
 
 ## 3. Download training data
-1. Download training data from [AMASS](https://amass.is.tue.mpg.de/index.html) and [DIP-IMU](https://dip.is.tuebingen.mpg.de/) and place in the data folder.
+1. Download training data from [AMASS](https://amass.is.tue.mpg.de/index.html) and [DIP-IMU](https://dip.is.tuebingen.mpg.de/) and place in the data folder as shown below after unzipping. We use the SMPLH+G version of the AMASS dataset. Note that AMASS has been updated since our paper was published, so use the latest version for best results.
 
 ```bash
 data
@@ -95,6 +95,15 @@ data
 1. Start by preprocessing the AMASS and DIP-IMU datasets [scripts/1. Preprocessing](scripts/1.%20Preprocessing). Run all files in order.
 2. Train the model [scripts/2. Train/run\_combos.sh](scripts/2.%20Train/run_combos.sh)
 
+## 5. IMUPoser Dataset
+The IMUPoser Dataset is available for download [here](https://www.dropbox.com/s/myq9k0x9i5waphn/imuposer_dataset.zip?dl=0). Check out the [Dataset Walkthrough notebook](scripts/3.%20Dataset%20Walkthrough.ipynb) for a quick overview of the data. Big thanks to Justin Macey from CMU and Giorgio Becherini from the Perceiving Systems group at the Max Planck
+Institute for Intelligent Systems for help with processing our motion capture data.
+
+## Follow up Research:
+- [WheelPoser: Sparse-IMU Based Body Pose Estimation for Wheelchair Users](https://github.com/axle-lab/WheelPoser) (ASSETS 2024)
+- [MobilePoser: Real-Time Full-Body Pose Estimation and 3D Human Translation from IMUs in Mobile Consumer Devices](https://spice-lab.org/projects/MobilePoser/) (UIST 2024)
+- [SmartPoser: Arm Pose Estimation with a Smartphone and Smartwatch Using UWB and IMU Data](https://www.figlab.com/research/2023/smartposer) (UIST 2023)
+
 ## Disclaimer
 ```
 THE PROGRAM IS DISTRIBUTED IN THE HOPE THAT IT WILL BE USEFUL, BUT WITHOUT ANY WARRANTY. IT IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
@@ -103,7 +112,7 @@ IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW THE AUTHOR WILL BE LIABLE TO YOU F
 ```
 
 ## Acknowledgments
-Some of the modules in this repo were inspired by the amazing [TransPose](https://github.com/Xinyu-Yi/TransPose/) github repo. 
+Some of the modules in this repo were inspired by the amazing [TransPose](https://github.com/Xinyu-Yi/TransPose/) github repo. If you liked IMUPoser, you should definitely check out TransPose!
 
 ## License
 The IMUPoser code can only be used for research i.e., non-commercial purposes. For a commercial license, please contact Vimal Mollyn, Karan Ahuja and Chris Harrison.
